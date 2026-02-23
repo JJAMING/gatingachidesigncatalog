@@ -224,6 +224,47 @@ const CategoryPopup: React.FC<{
 );
 
 /* ================================================================
+   DraftViewerModal – 시안 크게 보기 + 선택
+   ================================================================ */
+const DraftViewerModal: React.FC<{
+    draft: Draft;
+    idx: number;
+    onClose: () => void;
+    onSelect: () => void;
+}> = ({ draft, idx, onClose, onSelect }) => (
+    <div className="fixed inset-0 z-[70] bg-black/95 flex flex-col animate-fadeScale" onClick={onClose}>
+        <div className="flex-shrink-0 flex items-center justify-between px-5 pt-6 pb-4 bg-gradient-to-b from-black/50 to-transparent">
+            <h3 className="text-white font-black text-lg">시안 {idx + 1} 상세보기</h3>
+            <button onClick={onClose} className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center text-white active:scale-90 transition-transform"><X size={24} /></button>
+        </div>
+        <div className="flex-grow overflow-y-auto px-4 pb-20 space-y-6" onClick={e => e.stopPropagation()}>
+            {draft.imageUrls[0] ? (
+                <div className="space-y-2">
+                    <p className="text-[10px] font-black text-white/40 uppercase tracking-widest ml-1">Front / 앞면</p>
+                    <img src={draft.imageUrls[0]} className="w-full h-auto rounded-2xl shadow-2xl border border-white/10" alt="앞면" />
+                </div>
+            ) : (
+                <div className="w-full aspect-[4/3] bg-white/5 rounded-2xl flex items-center justify-center border border-white/10">
+                    <p className="text-sm text-white/20 font-bold">등록된 앞면 이미지가 없습니다.</p>
+                </div>
+            )}
+            {draft.imageUrls[1] && (
+                <div className="space-y-2">
+                    <p className="text-[10px] font-black text-white/40 uppercase tracking-widest ml-1">Back / 뒷면</p>
+                    <img src={draft.imageUrls[1]} className="w-full h-auto rounded-2xl shadow-2xl border border-white/10" alt="뒷면" />
+                </div>
+            )}
+        </div>
+        <div className="absolute bottom-8 inset-x-4">
+            <button onClick={() => { onSelect(); onClose(); }}
+                className="w-full py-4 bg-[#5B3E31] text-white rounded-2xl font-black text-base shadow-2xl active:scale-[0.98] transition-all border border-white/20 flex items-center justify-center gap-2">
+                <Check size={20} /> 이 시안 선택하기
+            </button>
+        </div>
+    </div>
+);
+
+/* ================================================================
    DetailModal – 시안 이미지 한눈에 + 옵션 + 장바구니
    ================================================================ */
 const DetailModal: React.FC<{
@@ -234,6 +275,7 @@ const DetailModal: React.FC<{
     onDelete: (itemId: string, draftId: string, imgIdx: 0 | 1) => void;
 }> = ({ item, onClose, onAdd, isAdmin, onUpload, onDelete }) => {
     const [selDraft, setSelDraft] = useState<Draft | null>(null);
+    const [viewerDraft, setViewerDraft] = useState<{ d: Draft, i: number } | null>(null);
     const [viewImg, setViewImg] = useState<string | null>(null);
     const [size, setSize] = useState(getSizes(item.id)[0]);
     const [paper, setPaper] = useState(getPapers(item.id)[0]);
@@ -274,7 +316,7 @@ const DetailModal: React.FC<{
                         {item.drafts.map((draft, idx) => (
                             <div key={draft.id} className="flex flex-col gap-1">
                                 <button
-                                    onClick={() => setSelDraft(selDraft?.id === draft.id ? null : draft)}
+                                    onClick={() => setViewerDraft({ d: draft, i: idx })}
                                     className={`relative rounded-xl overflow-hidden border-2 transition-all ${selDraft?.id === draft.id ? 'border-[#5B3E31] shadow-md' : 'border-stone-100'}`}
                                     style={{ aspectRatio: '4/3' }}>
                                     {draft.imageUrls[0] ? (
@@ -285,7 +327,10 @@ const DetailModal: React.FC<{
                                         </div>
                                     )}
                                     <div className="absolute bottom-0 inset-x-0 px-1.5 py-1 bg-gradient-to-t from-black/60 to-transparent flex items-center justify-between">
-                                        <span className="text-[8px] font-black text-white">시안{idx + 1}</span>
+                                        <div className="flex flex-col">
+                                            <span className="text-[8px] font-black text-white leading-none">시안{idx + 1}</span>
+                                            <span className="text-[6px] text-white/60 font-medium">크게보기</span>
+                                        </div>
                                         {selDraft?.id === draft.id && <div className="w-4 h-4 bg-[#5B3E31] rounded-full flex items-center justify-center"><Check size={9} className="text-white" /></div>}
                                     </div>
                                     {draft.imageUrls[1] && <span className="absolute top-1 right-1 bg-black/50 text-white text-[7px] font-bold px-1 py-0.5 rounded-full leading-none">2면</span>}
@@ -313,24 +358,20 @@ const DetailModal: React.FC<{
                     </div>
                 </div>
 
-                {/* 선택된 시안의 앞/뒤 이미지 크게 보기 */}
-                {selDraft && (selDraft.imageUrls[0] || selDraft.imageUrls[1]) && (
-                    <div className="px-4 pb-2">
-                        <p className="text-[9px] font-black text-stone-400 uppercase tracking-widest mb-2">{selDraft.label} 미리보기</p>
-                        <div className={`grid gap-2 ${selDraft.imageUrls[0] && selDraft.imageUrls[1] ? 'grid-cols-2' : 'grid-cols-1'}`}>
-                            {selDraft.imageUrls[0] && (
-                                <button onClick={() => setViewImg(selDraft.imageUrls[0])} className="rounded-xl overflow-hidden border border-stone-200 bg-white active:scale-[0.98] transition-transform">
-                                    <img src={selDraft.imageUrls[0]} className="w-full h-auto object-contain" alt="앞면" />
-                                    <p className="text-[8px] font-bold text-stone-400 text-center py-1">앞면</p>
-                                </button>
-                            )}
-                            {selDraft.imageUrls[1] && (
-                                <button onClick={() => setViewImg(selDraft.imageUrls[1])} className="rounded-xl overflow-hidden border border-stone-200 bg-white active:scale-[0.98] transition-transform">
-                                    <img src={selDraft.imageUrls[1]} className="w-full h-auto object-contain" alt="뒷면" />
-                                    <p className="text-[8px] font-bold text-stone-400 text-center py-1">뒷면</p>
-                                </button>
-                            )}
+                {/* selected draft indicator (Simple) */}
+                {selDraft && (
+                    <div className="mx-4 mb-2 p-3 bg-[#5B3E31]/5 rounded-xl border border-[#5B3E31]/10 flex items-center justify-between">
+                        <div className="flex items-center gap-2">
+                            <div className="w-8 h-8 rounded-lg overflow-hidden border border-white">
+                                <img src={selDraft.imageUrls[0] || ''} className="w-full h-full object-cover" alt="Selected" />
+                            </div>
+                            <div>
+                                <p className="text-[10px] font-black text-[#5B3E31]">{selDraft.label} 선택됨</p>
+                                <p className="text-[8px] text-stone-400 font-medium">다른 시안을 보려면 썸네일을 클릭하세요</p>
+                            </div>
                         </div>
+                        <button onClick={() => setViewerDraft({ d: selDraft, i: item.drafts.findIndex(d => d.id === selDraft.id) })}
+                            className="text-[9px] font-bold text-[#5B3E31] px-2 py-1 bg-white rounded-lg border border-[#5B3E31]/20">다시보기</button>
                     </div>
                 )}
 
@@ -434,6 +475,16 @@ const DetailModal: React.FC<{
                     <button className="absolute top-6 right-6 w-10 h-10 bg-white/20 rounded-full flex items-center justify-center text-white"><X size={20} /></button>
                     <img src={viewImg} className="max-w-full max-h-full object-contain rounded-xl" alt="확대 보기" />
                 </div>
+            )}
+
+            {/* 시안 전용 팝업 뷰어 */}
+            {viewerDraft && (
+                <DraftViewerModal
+                    draft={viewerDraft.d}
+                    idx={viewerDraft.i}
+                    onClose={() => setViewerDraft(null)}
+                    onSelect={() => setSelDraft(viewerDraft.d)}
+                />
             )}
         </div>
     );
