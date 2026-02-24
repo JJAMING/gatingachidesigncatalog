@@ -1,1 +1,150 @@
-
+{
+  "명함": {
+    "draft1": [
+      "/uploads/undefined_undefined_img0_1771492228328.jpg",
+      "/uploads/undefined_undefined_img0_1771492231174.jpg"
+    ],
+    "draft2": [
+      "/uploads/undefined_undefined_img0_1771492292151.jpg",
+      "/uploads/undefined_undefined_img0_1771492294943.jpg"
+    ],
+    "draft3": [
+      "/uploads/undefined_undefined_img0_1771578351228.jpg",
+      "/uploads/undefined_undefined_img0_1771578354058.jpg"
+    ]
+  },
+  "명찰": {
+    "draft1": [
+      "/uploads/undefined_undefined_img0_1771578369572.png",
+      "/uploads/undefined_undefined_img0_1771578373583.png"
+    ],
+    "draft2": [
+      "/uploads/undefined_undefined_img0_1771578377271.jpg",
+      null
+    ]
+  },
+  "초진문진표": {
+    "draft1": [
+      "/uploads/undefined_undefined_img0_1771578419705.jpg",
+      "/uploads/undefined_undefined_img0_1771578422219.jpg"
+    ],
+    "draft2": [
+      "/uploads/undefined_undefined_img0_1771578480712.jpg",
+      null
+    ],
+    "draft3": [
+      "/uploads/undefined_undefined_img0_1771578489070.jpg",
+      null
+    ]
+  },
+  "치료계획서": {
+    "draft1": [
+      "/uploads/undefined_undefined_img0_1771578508364.jpg",
+      "/uploads/undefined_undefined_img0_1771578510981.png"
+    ],
+    "draft2": [
+      "/uploads/undefined_undefined_img0_1771578559530.jpg",
+      null
+    ]
+  },
+  "접수증": {
+    "draft1": [
+      "/uploads/undefined_undefined_img0_1771578574890.jpg",
+      null
+    ],
+    "draft2": [
+      "/uploads/undefined_undefined_img0_1771578577575.jpg",
+      null
+    ],
+    "draft3": [
+      "/uploads/undefined_undefined_img0_1771578586116.jpg",
+      null
+    ]
+  },
+  "주의사항": {
+    "draft1": [
+      "/uploads/undefined_undefined_img0_1771580105062.jpg",
+      "/uploads/undefined_undefined_img0_1771580109109.jpg"
+    ],
+    "draft2": [
+      "/uploads/undefined_undefined_img0_1771580124143.jpg",
+      "/uploads/undefined_undefined_img0_1771580131577.jpg"
+    ],
+    "draft3": [
+      "/uploads/undefined_undefined_img0_1771580135537.jpg",
+      "/uploads/undefined_undefined_img0_1771580143718.jpg"
+    ]
+  },
+  "클린매트": {
+    "draft1": [
+      "/uploads/undefined_undefined_img0_1771580262651.jpg",
+      "/uploads/undefined_undefined_img0_1771580274132.jpg"
+    ],
+    "draft2": [
+      "/uploads/undefined_undefined_img0_1771580269312.jpg",
+      null
+    ],
+    "draft3": [
+      "/uploads/undefined_undefined_img0_1771580285346.png",
+      null
+    ]
+  },
+  "종이컵": {
+    "draft1": [
+      "/uploads/undefined_undefined_img0_1771580404337.jpg",
+      "/uploads/undefined_undefined_img0_1771580406669.png"
+    ]
+  },
+  "포스터": {
+    "draft1": [
+      "/uploads/undefined_undefined_img0_1771580886869.jpg",
+      null
+    ],
+    "draft2": [
+      "/uploads/undefined_undefined_img0_1771580890499.jpg",
+      null
+    ],
+    "draft3": [
+      "/uploads/undefined_undefined_img0_1771580894614.png",
+      "/uploads/undefined_undefined_img0_1771580898382.png"
+    ]
+  },
+  "배너": {
+    "draft1": [
+      "/uploads/배너_draft1_img0_1771836358903.jpg",
+      null
+    ]
+  },
+  "쇼핑백": {
+    "draft1": [
+      "/uploads/undefined_undefined_img0_1771581176289.jpg",
+      "/uploads/undefined_undefined_img0_1771581180805.png"
+    ]
+  },
+  "편지봉투": {
+    "draft1": [
+      "/uploads/undefined_undefined_img0_1771581220981.jpg",
+      "/uploads/undefined_undefined_img0_1771581223756.png"
+    ],
+    "draft2": [
+      "/uploads/undefined_undefined_img0_1771581235508.png",
+      null
+    ]
+  },
+  "보증서": {
+    "draft1": [
+      "/uploads/undefined_undefined_img0_1771581256878.jpg",
+      "/uploads/undefined_undefined_img0_1771581261313.jpg"
+    ],
+    "draft2": [
+      "/uploads/undefined_undefined_img0_1771581280560.png",
+      null
+    ]
+  },
+  "동의서": {
+    "draft1": [
+      "/uploads/undefined_undefined_img0_1771822643515.jpg",
+      null
+    ]
+  }
+}
