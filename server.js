@@ -43,8 +43,8 @@ const io = new Server(httpServer, {
 app.use(cors());
 app.use(express.json());
 
-// uploads 폴더 생성
-const uploadsDir = path.join(__dirname, 'uploads');
+// public/uploads 폴더 생성 (Vercel 정적 서빙 및 로컬 개발용)
+const uploadsDir = path.join(__dirname, 'public', 'uploads');
 if (!fs.existsSync(uploadsDir)) {
   fs.mkdirSync(uploadsDir, { recursive: true });
 }
