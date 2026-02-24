@@ -138,8 +138,9 @@ function getMinQty(id: string) {
     return 1;
 }
 
+// 로컬 개발 환경(localhost)이 아니면 상대 경로 사용 (Vercel 배포 시 도메인 자동 맞춤)
 const SERVER = typeof window !== 'undefined'
-    ? (window.location.hostname === 'localhost' ? 'http://localhost:4000' : `http://${window.location.hostname}:4000`)
+    ? (window.location.hostname === 'localhost' ? 'http://localhost:4000' : '')
     : 'http://localhost:4000';
 
 /* ================================================================
@@ -597,7 +598,9 @@ export default function App() {
     // Socket.io
     useEffect(() => {
         const s = io(SERVER, { transports: ['websocket', 'polling'] });
-        fetch(`${SERVER}/api/images`).then(r => r.json()).then((meta: Record<string, Record<string, (string | null)[]>>) => {
+        // 이미지 목록 가져오기 (Vercel에서는 /uploads/meta.json 정적 파일을, 로컬에서는 API를 우선 시도)
+        const metaUrl = SERVER ? `${SERVER}/api/images` : '/uploads/meta.json';
+        fetch(metaUrl).then(r => r.json()).then((meta: Record<string, Record<string, (string | null)[]>>) => {
             setCategories(prev => prev.map(cat => ({
                 ...cat, items: cat.items.map(it => {
                     const m = meta[it.id]; if (!m) return it;
