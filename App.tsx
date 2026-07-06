@@ -59,8 +59,6 @@ const CATEGORIES: Category[] = [
     {
         title: 'Facility Marketing', subtitle: '공간에 가치를 더하는 홍보 및 편의', items: [
             item('클린매트', <Layout />, '브랜드 아이덴티티가 돋보이는 디자인', '900x1200mm', 'marketing'),
-            item('종이컵', <ShoppingBag />, '대기 공간의 세심한 브랜드 배려', '6.5oz', 'marketing'),
-            item('포스터', <FileText />, '임팩트 있는 핵심 가치 전달 솔루션', 'A2', 'marketing'),
         ]
     },
     {
@@ -70,7 +68,7 @@ const CATEGORIES: Category[] = [
     },
     {
         title: 'Package & Admin', subtitle: '전달의 품격을 높이는 패키지 시스템', items: [
-            item('쇼핑백', <ShoppingBag />, '견고한 마감의 프리미엄 브랜드 패키지', '260x350mm', 'package'),
+            item('쇼핑백', <ShoppingBag />, '견고한 마감의 프리미엄 브랜드 패키지', '250x200x100', 'package'),
             item('편지봉투', <Mail />, '격식을 갖춘 비즈니스 전용 봉투', '소/대', 'package'),
             item('보증서', <ShieldCheck />, '신뢰를 확증하는 프리미엄 보증서', '90x50mm', 'package'),
         ]
@@ -86,10 +84,8 @@ function getSizes(id: string) {
     if (id === '동의서') return ['A4(210x297)', 'A5(148x210)'];
     if (id === '주의사항') return ['A5(148x210)', '디지털 동의서(JPEG 파일만)'];
     if (id === '클린매트') return ['A4(297x210)'];
-    if (id === '종이컵') return ['6.5온스(70x73mm)'];
-    if (id === '포스터') return ['A4(210x297)', 'A5(148x210)'];
     if (id === '배너') return ['600x1800'];
-    if (id === '쇼핑백') return ['소(150x201x60)', '대(230x330x100)'];
+    if (id === '쇼핑백') return ['대(250x200x100)'];
     if (id === '편지봉투') return ['소봉투(220x105)', '대봉투(330x245)'];
     if (id === '보증서') return ['A4(210x297)'];
     return ['A4', 'A5', 'A6', 'Custom'];
@@ -97,14 +93,12 @@ function getSizes(id: string) {
 function getPapers(id: string) {
     if (id === '명함') return ['일반(양면) - 스노우지 250g', '고급지(양면) - 엑스트라매트 350g'];
     if (id === '명찰') return ['아크릴', '금속-금색', '금속-은색'];
-    if (id === '초진문진표') return ['모조지 150g(양면)'];
+    if (id === '초진문진표') return ['모조지 150g(단면)'];
     if (id === '치료계획서') return ['모조지 80g', '모조지 150g'];
     if (id === '접수증') return ['모조지 80g'];
     if (id === '동의서') return ['모조지 80g', '모조지 150g'];
     if (id === '주의사항') return ['없음', '모조지 150g'];
     if (id === '클린매트') return ['모조지 80g'];
-    if (id === '종이컵') return ['100% 무형광 천연펄프'];
-    if (id === '포스터') return ['모조지 150g'];
     if (id === '배너') return ['패트', '메쉬', '투명페트', '패브릭'];
     if (id === '쇼핑백') return ['스노우지 180g'];
     if (id === '편지봉투') return ['모조지 120g', '페스티발(체크)'];
@@ -119,8 +113,7 @@ function getQtyOptions(id: string, size?: string) {
     if (id === '동의서') return [2000, 3000, 5000, 10000];
     if (id === '주의사항') return [0, 500, 1000, 2000, 3000, 5000, 10000];
     if (id === '클린매트') return [4000, 5000, 7000, 10000];
-    if (id === '종이컵') return [1000, 2000, 3000, 5000, 10000];
-    if (id === '포스터' || id === '배너') return [1, 2, 3, 5, 10, 15, 20, 30, 50, 100];
+    if (id === '배너') return [1, 2, 3, 5, 10, 15, 20, 30, 50, 100];
     if (id === '쇼핑백') return [1000, 2000, 3000, 5000, 10000];
     if (id === '편지봉투') {
         if (size && size.includes('소봉투')) return [1000, 2000, 3000, 5000];
@@ -137,8 +130,7 @@ function getMinQty(id: string, size?: string) {
     if (id === '동의서') return 2000;
     if (id === '주의사항') return 0;
     if (id === '클린매트') return 4000;
-    if (id === '종이컵') return 1000;
-    if (id === '포스터' || id === '배너') return 1;
+    if (id === '배너') return 1;
     if (id === '쇼핑백') return 1000;
     if (id === '편지봉투') {
         if (size && size.includes('소봉투')) return 1000;
@@ -470,7 +462,7 @@ const DetailModal: React.FC<{
                             <select value={qty} onChange={e => setQty(Number(e.target.value))}
                                 className="w-full appearance-none bg-white border border-stone-200 text-stone-800 text-xs font-bold px-4 py-3 rounded-xl focus:outline-none focus:border-[#5B3E31] shadow-sm">
                                 {getQtyOptions(item.id, size).map(n => {
-                                    const unit = (item.id === '종이컵' || item.id === '명함' || item.id === '명찰' || item.id === '배너' || item.id === '포스터') ? '개' : '매';
+                                    const unit = (item.id === '명함' || item.id === '명찰' || item.id === '배너') ? '개' : '매';
                                     return <option key={n} value={n}>{n === 0 ? '없음' : n.toLocaleString() + unit}</option>;
                                 })}
                             </select>
